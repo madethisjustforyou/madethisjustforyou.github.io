@@ -299,13 +299,13 @@ lightbox.addEventListener("click", (e) => {
 
 /* Page 4: reasons machine */
 const reasons = [
-  "Your calm presence makes everything feel lighter.",
-  "You care about my well-being in a way that feels rare.",
-  "The videos/selfies you send that instantly make my day.",
+  "Your calm presence makes everything feel like its going to be okay.",
+  "You care about my well-being in a way that feels safe and comforting.",
+  "The videos/selfies you send make me smile ear-to-ear wherever I am :)",
   "How excited you get about traveling and building a life together.",
-  "How you notice effort — and make me want to be better.",
-  "Our shared humor. Serious when it matters, unserious when it doesn’t.",
-  "I’m really glad it’s you."
+  "How you notice effort, and make me want to be better a better person for you :)",
+  "Our shared humor. It's special, but at least it'll be special together :)",
+  "I’m just really glad it’s you."
 ];
 
 let reasonIdx = 0;

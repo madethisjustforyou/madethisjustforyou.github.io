@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Uma</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Gate -->
+    <div id="gate" class="gate">
+      <div class="gate-card">
+        <div class="gate-top">
+          <div class="envelope" aria-hidden="true">
+            <div class="env-body" id="envBody"></div>
+            <div class="env-letter" id="envLetter"></div>
+            <div class="env-flap" id="envFlap"></div>
+            <div class="env-seal" id="envSeal"></div>
+          </div>
+
+          <div class="gate-title">Private Letter</div>
+          <div class="gate-subtitle">Made for one person.</div>
+        </div>
+
+        <form id="gateForm" class="gate-form" autocomplete="off">
+          <label class="field">
+            <span class="label">Username</span>
+            <input id="username" type="text" inputmode="text" spellcheck="false" autocomplete="off" />
+            <div id="userMsg" class="helper"></div>
+          </label>
+
+          <label class="field">
+            <span class="label">Password</span>
+            <input id="password" type="password" inputmode="text" spellcheck="false" autocomplete="off" />
+          </label>
+
+          <div class="gate-actions">
+            <button type="button" id="hintBtn" class="btn btn-ghost">Hint</button>
+            <button type="submit" class="btn btn-primary">Open</button>
+          </div>
+
+          <div id="hint" class="hint" aria-live="polite"></div>
+          <div id="gateError" class="error" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- App -->
+    <main id="app" class="app" aria-hidden="true">
+      <div id="stage" class="stage">
+        <!-- Page 1 -->
+        <section class="page is-active theme-ivory" data-page="1">
+          <div class="page-inner center-all">
+            <h1 class="h1" id="p1Title" data-text="Happy Valentine’s Day, Uma."></h1>
+            <p
+              class="lead"
+              id="p1Lead"
+              data-text="I wanted to give you something that would last a little longer than flowers."
+            ></p>
+            <button class="btn btn-primary next" data-next="2">Continue →</button>
+          </div>
+        </section>
+
+        <!-- Page 2 -->
+        <section class="page theme-sage" data-page="2">
+          <div class="page-inner center-all">
+            <h2 class="h2">Favorite moments</h2>
+            <p class="sub">Tap a memory to bring it into focus. Drag them around if you want.</p>
+
+            <div id="memories" class="float-field" aria-label="Favorite moments">
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Mini golf (first date)</div>
+                <div class="memory-back">Our first date — I remember realizing how easy it felt to be around you.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Boba & holding hands</div>
+                <div class="memory-back">Nothing fancy — just standing there, talking. I already wanted more.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Half of The Hunger Games</div>
+                <div class="memory-back">We didn’t even finish the movie. Somehow that made it better.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Painting the clay cow & plate</div>
+                <div class="memory-back">Messy, creative, a little chaotic — and still calm with you.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Arboretum + 12 Days of Christmas</div>
+                <div class="memory-back">One of those days that sticks with you — warm, present, real.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Cake & the orchid</div>
+                <div class="memory-back">The moment I asked you to be my girlfriend. I didn’t overthink it — I just knew.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Desk food drop-offs</div>
+                <div class="memory-back">Small things — but you always notice effort, and it makes me want to do more.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Grocery shopping</div>
+                <div class="memory-back">Mundane, comfortable, easy. Somehow that’s one of my favorite parts.</div>
+              </button>
+
+              <button class="memory" type="button" data-memory>
+                <div class="memory-front">Dallas Zoo</div>
+                <div class="memory-back">A full day together that never felt long — just right.</div>
+              </button>
+            </div>
+
+            <div class="nav">
+              <button class="btn btn-primary next" data-next="3">Continue →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page 3 -->
+        <section class="page theme-blush" data-page="3">
+          <div class="page-inner center-all">
+            <h2 class="h2">Us, so far.</h2>
+            <p class="sub">Organized like a tiny scrapbook.</p>
+
+            <div class="photo-sections">
+              <div class="photo-section">
+                <div class="section-title">Us</div>
+                <div class="polaroids" data-polaroids>
+                  <button class="polaroid" type="button" data-src="assets/photos/1.jpg" aria-label="Photo 1"></button>
+                  <button class="polaroid" type="button" data-src="assets/photos/2.jpg" aria-label="Photo 2"></button>
+                  <button class="polaroid" type="button" data-src="assets/photos/3.jpg" aria-label="Photo 3"></button>
+                </div>
+              </div>
+
+              <div class="photo-section">
+                <div class="section-title">Little moments</div>
+                <div class="polaroids" data-polaroids>
+                  <button class="polaroid" type="button" data-src="assets/photos/4.jpg" aria-label="Photo 4"></button>
+                  <button class="polaroid" type="button" data-src="assets/photos/5.jpg" aria-label="Photo 5"></button>
+                  <button class="polaroid" type="button" data-src="assets/photos/6.jpg" aria-label="Photo 6"></button>
+                </div>
+              </div>
+
+              <div class="photo-section">
+                <div class="section-title">More</div>
+                <div class="polaroids" data-polaroids>
+                  <button class="polaroid" type="button" data-src="assets/photos/7.jpg" aria-label="Photo 7"></button>
+                  <button class="polaroid" type="button" data-src="assets/photos/8.jpg" aria-label="Photo 8"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav">
+              <button class="btn btn-primary next" data-next="4">Continue →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page 4 -->
+        <section class="page theme-rose" data-page="4">
+          <div class="page-inner center-all">
+            <h2 class="h2">Things I love about you</h2>
+            <p class="sub">Tap the machine. Drag the bubbles around if they overlap.</p>
+
+            <div class="love-machine-wrap">
+              <button id="machineBtn" class="reason-machine" type="button" aria-label="Reasons machine">
+                <div class="rm-funnel" aria-hidden="true"></div>
+                <div class="rm-box" aria-hidden="true">
+                  <div class="rm-bolts">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="rm-heart">♥︎</div>
+                  <div class="rm-label">REASONS</div>
+                  <div class="rm-slot"></div>
+                </div>
+              </button>
+
+              <div id="cloudField" class="cloud-field" aria-label="Reasons floating around"></div>
+            </div>
+
+            <div id="machineMsg" class="small"></div>
+
+            <div class="nav">
+              <button class="btn btn-primary next" data-next="5">Continue →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page 5 -->
+        <section class="page theme-dusk" data-page="5">
+          <div class="page-inner center-all">
+            <div class="stage-spotlight" aria-hidden="true"></div>
+
+            <h2 class="h2 big drama-title" id="valTitle" data-text="Uma, will you be my Valentine?"></h2>
+            <p class="sub drama-sub" id="valSub" data-text="A very serious question. (I’m smiling.)"></p>
+
+            <div class="choice drama-choice" id="valChoices">
+              <button class="btn btn-ivory drama-btn" id="valYes">Yes</button>
+              <button class="btn btn-ivory drama-btn" id="valObv">Umobviously</button>
+            </div>
+
+            <div class="curtain" id="curtain" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <!-- Page 6 -->
+        <section class="page theme-candle" data-page="6">
+          <div class="page-inner letter center-all">
+            <div class="timer">
+              <div class="timer-label">Since Nov 1</div>
+              <div id="timerValue" class="timer-value">—</div>
+              <div class="timer-sub">…and here’s to many more. </div>
+              <div class="timer-sub">     </div>
+            </div>
+
+            <div class="letter-body" id="letterBox">
+              <div id="letterTyped" class="typed-letter"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Lightbox -->
+      <div id="lightbox" class="lightbox" aria-hidden="true">
+        <button id="lightboxClose" class="lightbox-close" type="button" aria-label="Close">×</button>
+        <img id="lightboxImg" alt="Photo" />
+      </div>
+
+      <!-- Celebration layer -->
+      <div id="celebrate" class="celebrate" aria-hidden="true"></div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

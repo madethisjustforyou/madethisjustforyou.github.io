@@ -618,10 +618,11 @@ async function runFinalRevealAndType() {
 
   const paragraphs = [
     "Uma,",
-    "Being with you feels steady in the best way — like I can finally exhale.",
-    "You’ve brought warmth, care, and a kind of peace into my life that I didn’t know I needed. I love how natural this feels, how intentional it is, and how much room there is for us to grow.",
-    "This is just one small way of saying: I choose you — today, and every day.",
-    "Happy Valentine’s Day 🤍"
+    "Being with you just feels right in the best way, like I finally realized that this was meant for me :)",
+    "You’ve brought warmth, care, and a kind of peace into my life that I didn’t know I needed. I love how natural this feels, how intentional it is, and how much I know we will grow together.",
+    "This is just one small way of saying: I choose you, today, and every day.",
+    "Happy Valentine’s Day Uma"
+    "Dhanish"
   ];
 
   typed.innerHTML = "";

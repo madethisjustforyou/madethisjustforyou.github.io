@@ -96,7 +96,7 @@ username.value = EXPECTED_USER;
 
 username.addEventListener("input", () => {
   const u = normalize(username.value);
-  if (u && u !== EXPECTED_USER) setUserMsg("This letter is for Uma.");
+  if (u && u !== EXPECTED_USER) setUserMsg("This letter was written just for Uma :)");
   else setUserMsg("");
 });
 

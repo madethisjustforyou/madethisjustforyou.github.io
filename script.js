@@ -22,6 +22,7 @@ const lightboxClose = document.getElementById("lightboxClose");
 
 const memoriesField = document.getElementById("memories");
 const curtain = document.getElementById("curtain");
+const trickGifs = document.getElementById("trickGifs");
 
 const machineBtn = document.getElementById("machineBtn");
 const cloudField = document.getElementById("cloudField");
@@ -80,15 +81,20 @@ async function showPage(n) {
 }
 
 function openApp() {
-  gateCard.classList.add("is-opening");
+  gateCard.classList.add("is-focusing");
+
   setTimeout(() => {
-    gate.classList.add("is-leaving");
+    gateCard.classList.add("is-opening");
+
     setTimeout(() => {
-      gate.style.display = "none";
-      app.setAttribute("aria-hidden", "false");
-      showPage(1);
-    }, 620);
-  }, 620);
+      gate.classList.add("is-leaving");
+      setTimeout(() => {
+        gate.style.display = "none";
+        app.setAttribute("aria-hidden", "false");
+        showPage(1);
+      }, 700);
+    }, 2200);
+  }, 360);
 }
 
 /* Gate logic */
@@ -368,14 +374,21 @@ function spawnCloud(text) {
 
 function initCloudFloat(el) {
   // starting velocity
-  el.dataset.vx = (Math.random() * 0.6 + 0.25) * (Math.random() < 0.5 ? -1 : 1);
-  el.dataset.vy = (Math.random() * 0.45 + 0.18) * (Math.random() < 0.5 ? -1 : 1);
+  el.dataset.vx = (Math.random() * 0.5 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+  el.dataset.vy = -(Math.random() * 0.6 + 0.4);
 
   // tiny per-cloud wobble phase
   el.dataset.phase = (Math.random() * Math.PI * 2).toString();
 
   // ensure it can move smoothly via transforms
   el.style.willChange = "transform";
+
+  // After the initial rise, gently settle downward.
+  setTimeout(() => {
+    const fall = Math.random() * 0.25 + 0.12;
+    el.dataset.vy = fall.toString();
+    el.dataset.settling = "1";
+  }, 1400);
 }
 
 let cloudsRAF = null;
@@ -387,7 +400,7 @@ function startCloudsFloatLoop() {
   const pad = 14;
   const maxV = 1.1;      // speed cap
   const pushK = 0.018;   // separation strength
-  const wobbleK = 0.10;  // wobble amount
+  const wobbleK = 0.08;  // wobble amount
 
   function step() {
     const rect = cloudField.getBoundingClientRect();
@@ -443,8 +456,10 @@ function startCloudsFloatLoop() {
       // gentle wobble (so it feels floaty, not robotic)
       const phase = parseFloat(c.dataset.phase || "0") + 0.02;
       c.dataset.phase = phase.toString();
-      s.vx += Math.sin(phase) * wobbleK * 0.02;
-      s.vy += Math.cos(phase * 0.9) * wobbleK * 0.02;
+      const settling = c.dataset.settling === "1";
+      const wobbleScale = settling ? 0.5 : 1;
+      s.vx += Math.sin(phase) * wobbleK * 0.02 * wobbleScale;
+      s.vy += Math.cos(phase * 0.9) * wobbleK * 0.02 * wobbleScale;
 
       // clamp velocity
       s.vx = Math.max(-maxV, Math.min(maxV, s.vx));
@@ -567,15 +582,177 @@ async function valentineChosen() {
   setTimeout(() => curtain.classList.remove("is-on"), 1100);
 }
 
-document.getElementById("valYes").addEventListener("click", () => valentineChosen());
-document.getElementById("valObv").addEventListener("click", () => valentineChosen());
+const valYes = document.getElementById("valYes");
+const valNo = document.getElementById("valNo");
+
+valYes.addEventListener("click", () => {
+  if (lastGif) lastGif.remove();
+  valentineChosen();
+});
+
+let noClicks = 0;
+const noMax = 7;
+let lastGif = null;
+let noIsLoose = false;
+let lastNoPos = null;
+let noSide = -1;
+const noTextOptions = ["nah", "nope", "no way", "no way jose", "nuh uh", "not a chance"];
+let noTextOrder = shuffle(noTextOptions);
+
+const noGifs = [
+  "assets/gifs/no-1.gif",
+  "assets/gifs/no-2.gif",
+  "assets/gifs/no-3.gif",
+  "assets/gifs/no-4.gif",
+  "assets/gifs/no-5.gif",
+  "assets/gifs/no-6.gif",
+];
+const monkeyGif = "assets/gifs/monkey-kiss.gif";
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let noGifOrder = shuffle(noGifs);
+
+function placeTrickGif(x, y, url) {
+  if (!trickGifs) return;
+  if (lastGif) {
+    lastGif.remove();
+    lastGif = null;
+  }
+  const gif = document.createElement("div");
+  gif.className = "trick-gif";
+  gif.style.backgroundImage = `url("${url}")`;
+
+  const rect = trickGifs.getBoundingClientRect();
+  const size = 160;
+  const left = Math.max(8, Math.min(rect.width - size - 8, x - rect.left - size / 2));
+  const top = Math.max(8, Math.min(rect.height - size - 8, y - rect.top - size / 2));
+  gif.style.left = `${left}px`;
+  gif.style.top = `${top}px`;
+
+  trickGifs.appendChild(gif);
+  lastGif = gif;
+  setTimeout(() => {
+    if (gif.parentNode) gif.remove();
+  }, 10000);
+}
+
+function moveNoButton() {
+  const area = document.getElementById("valChoices");
+  if (!area || !valNo) return;
+
+  const areaRect = area.getBoundingClientRect();
+  const btnRect = valNo.getBoundingClientRect();
+
+  const yesRect = valYes.getBoundingClientRect();
+  const centerX = yesRect.left - areaRect.left + yesRect.width / 2;
+  const centerY = yesRect.top - areaRect.top + yesRect.height / 2;
+  const yesBox = {
+    x: yesRect.left - areaRect.left,
+    y: yesRect.top - areaRect.top,
+    w: yesRect.width,
+    h: yesRect.height,
+  };
+
+  let x = 0;
+  let y = 0;
+  let attempts = 0;
+  const minDist = Math.min(240, Math.max(160, areaRect.width * 0.45));
+
+  if (noClicks > 1) noSide *= -1;
+  else noSide = -1;
+  const edgePad = 10;
+  const sideOffset = Math.min(
+    Math.max(220, areaRect.width * 0.45),
+    areaRect.width / 2 - btnRect.width - edgePad
+  );
+  const targetX = centerX + noSide * sideOffset - btnRect.width / 2;
+
+  while (attempts < 36) {
+    x = targetX + (Math.random() * 24 - 12);
+    y = centerY + (Math.random() * 240 - 120) - btnRect.height / 2;
+
+    const maxX = areaRect.width - btnRect.width - 8;
+    const maxY = areaRect.height - btnRect.height - 8;
+    x = Math.max(8, Math.min(maxX, x));
+    y = Math.max(8, Math.min(maxY, y));
+
+    const dxYes = x + btnRect.width / 2 - centerX;
+    const dyYes = y + btnRect.height / 2 - centerY;
+    if (Math.hypot(dxYes, dyYes) < minDist) {
+      attempts += 1;
+      continue;
+    }
+
+    const pad = 16;
+    const noBox = { x, y, w: btnRect.width, h: btnRect.height };
+    const overlap =
+      noBox.x < yesBox.x + yesBox.w + pad &&
+      noBox.x + noBox.w + pad > yesBox.x &&
+      noBox.y < yesBox.y + yesBox.h + pad &&
+      noBox.y + noBox.h + pad > yesBox.y;
+    if (overlap) {
+      attempts += 1;
+      continue;
+    }
+
+    if (!lastNoPos) break;
+    const dx = x - lastNoPos.x;
+    const dy = y - lastNoPos.y;
+    if (Math.hypot(dx, dy) >= minDist) break;
+    attempts += 1;
+  }
+
+  valNo.style.left = `${x}px`;
+  valNo.style.top = `${y}px`;
+  lastNoPos = { x, y };
+}
+
+if (valNo) {
+  valNo.addEventListener("click", (e) => {
+    e.preventDefault();
+    noClicks += 1;
+
+    if (!noIsLoose) {
+      valNo.classList.add("is-loose");
+      noIsLoose = true;
+    }
+
+    if (noClicks === noMax - 1) {
+      valNo.textContent = "well... maybe";
+    } else if (noClicks < noMax) {
+      const textIdx = (noClicks - 1) % noTextOrder.length;
+      valNo.textContent = noTextOrder[textIdx];
+    }
+
+    if (noClicks >= noMax) {
+      placeTrickGif(e.clientX, e.clientY, monkeyGif);
+    } else {
+      const idx = (noClicks - 1) % noGifOrder.length;
+      placeTrickGif(e.clientX, e.clientY, noGifOrder[idx]);
+    }
+    moveNoButton();
+
+    if (noClicks >= noMax) {
+      valNo.style.opacity = "0";
+      valNo.style.pointerEvents = "none";
+    }
+  });
+}
 
 /* Timer (with seconds) */
 function startTimer() {
   if (timerStarted) return;
   timerStarted = true;
 
-  const start = new Date("2025-11-01T00:00:00");
+  const start = new Date("2025-11-01T17:58:00");
   const el = document.getElementById("timerValue");
 
   function tick() {

@@ -11,9 +11,21 @@
     <!-- Gate -->
     <div id="gate" class="gate">
       <div class="gate-card">
+        <div class="gate-decor" aria-hidden="true">
+          <span class="flower f1"></span>
+          <span class="flower f2"></span>
+          <span class="flower f3"></span>
+          <span class="flower f4"></span>
+          <span class="vine v1"></span>
+          <span class="vine v2"></span>
+        </div>
         <div class="gate-top">
           <div class="envelope" aria-hidden="true">
             <div class="env-body" id="envBody"></div>
+            <div class="env-under-top" aria-hidden="true"></div>
+            <div class="env-side env-side-left" aria-hidden="true"></div>
+            <div class="env-side env-side-right" aria-hidden="true"></div>
+            <div class="env-bottom-flap" aria-hidden="true"></div>
             <div class="env-letter" id="envLetter"></div>
             <div class="env-flap" id="envFlap"></div>
             <div class="env-seal" id="envSeal"></div>
@@ -52,7 +64,7 @@
         <!-- Page 1 -->
         <section class="page is-active theme-ivory" data-page="1">
           <div class="page-inner center-all">
-            <h1 class="h1" id="p1Title" data-text="Happy Valentine’s Day, Uma."></h1>
+            <h1 class="h1" id="p1Title" data-text="Happy Three Months, Uma."></h1>
             <p
               class="lead"
               id="p1Lead"
@@ -197,14 +209,15 @@
             <div class="stage-spotlight" aria-hidden="true"></div>
 
             <h2 class="h2 big drama-title" id="valTitle" data-text="Uma, will you be my Valentine?"></h2>
-            <p class="sub drama-sub" id="valSub" data-text="A very serious question. (I’m smiling.)"></p>
+            <p class="sub drama-sub" id="valSub" data-text="(Please say yes.)"></p>
 
             <div class="choice drama-choice" id="valChoices">
-              <button class="btn btn-ivory drama-btn" id="valYes">Yes</button>
-              <button class="btn btn-ivory drama-btn" id="valObv">Umobviously</button>
+              <button class="btn btn-ivory drama-btn" id="valYes">Umobviously</button>
+              <button class="btn btn-ivory drama-btn" id="valNo">No</button>
             </div>
 
             <div class="curtain" id="curtain" aria-hidden="true"></div>
+            <div class="trick-gifs" id="trickGifs" aria-hidden="true"></div>
           </div>
         </section>
 
@@ -212,10 +225,10 @@
         <section class="page theme-candle" data-page="6">
           <div class="page-inner letter center-all">
             <div class="timer">
-              <div class="timer-label">Since Nov 1st 2025</div>
+              <div class="timer-label">Since Nov 1st 2025, 5:58 PM</div>
               <div id="timerValue" class="timer-value">—</div>
               <div class="timer-sub">…and here’s to many more. </div>
-              <div class="timer-sub">     </div>
+              <div class="timer-sub">     </div>
             </div>
 
             <div class="letter-body" id="letterBox">
